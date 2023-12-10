@@ -1,8 +1,28 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# NextJS - Login form using server actions, strapi, formik and yup.
 
 ## Getting Started
 
-First, run the development server:
+First we must perform an installation of Strapi, you can use the type of database you like, in the case of this project I used SQLite.
+
+```bash
+npm create-strapi-app project-name
+# or
+yarn create strapi-app project-name
+# or
+pnpm create strapi-app project-name
+```
+
+For the NextJS part of the project, just clone this repository and run the following commands in the terminal.
+
+```bash
+npm install
+# or
+yarn
+# or
+pnpm install
+```
+
+And then
 
 ```bash
 npm run dev
@@ -10,27 +30,47 @@ npm run dev
 yarn dev
 # or
 pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+At this point the project should start but not work if you try to set the login data you created in strapi, to do this just create the .env.local file in the root of our NextJS project and configure it as follows:
 
-You can start editing the page by modifying `app/page.js`. The page auto-updates as you edit the file.
+```sh
+STRAPI_ENPOINT="Strapi api url"
+# If you are working locally this is http://localhost:1337/api or http://127.0.0.1:1337/api
+```
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+Once this is configured, you can test the login to receive the response given by strapi in the app.
 
-## Learn More
+You should receive the following responses.
 
-To learn more about Next.js, take a look at the following resources:
+```json
+{
+  "type": "AUTH_SUCCESS",
+  "data": {
+    "jwt": "your-sesion-jwt",
+    "user": {
+      "id": 1,
+      "username": "username",
+      "email": "example@example.com",
+      "confirm": true,
+      "blocked": false
+    }
+  }
+}
+```
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+Or
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+```json
+{
+  "type": "AUTH_ERROR",
+  "error": {
+    "status": 400,
+    "message": "Invalid identifier or password"
+  }
+}
+```
 
-## Deploy on Vercel
+And that would be all, feel free to test or modify my code, and I apologize for my bad english.
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+See you next time! Chao!
